@@ -88,7 +88,7 @@ CACHE_DIR = appdirs.user_cache_dir(APP_NAME)
 CONFIG_FILE = os.path.join(CONFIG_DIR, "config.json")
 
 # Get WSL CWPROOT if available
-WSL_CWPROOT = detect_cwproot_from_wsl() 
+WSL_CWPROOT = detect_cwproot_from_wsl() or "/home/usr/SeismicUnix"
 
 # Default settings
 DEFAULT_CONFIG = {
