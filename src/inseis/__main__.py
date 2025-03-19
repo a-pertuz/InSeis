@@ -13,15 +13,8 @@ def main():
         """Main function to start the InSeis application."""
         logging.info("Starting InSeis application")
         app = QApplication(sys.argv)
-
-
-        """
-        work_dir = os.path.dirname(os.path.abspath(__file__))
-        qss_path = os.path.join(work_dir, "ui", "theme.qss")
-        
-        with open(qss_path, "r") as f:
-            app.setStyleSheet(f.read())
-        """
+        app.setStyle("windowsvista")
+        app.setFont(QFont("Segoe UI", 10))
 
         # Create and show main window 
         window = InSeis()  # Using updated class name
@@ -35,8 +28,7 @@ def main():
         window_height = int(screen_height * 0.8)
         window.setGeometry(pos_x, pos_y, window_width, window_height)
 
-        app.setStyle("windowsvista")
-        app.setFont(QFont("Segoe UI", 10))
+
 
         window.show()
 
