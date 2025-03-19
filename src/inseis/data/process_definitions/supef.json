@@ -1,0 +1,39 @@
+{
+  "name": "SUPEF",
+  "display_name": "SUPEF",
+  "description": "Wiener predictive error filtering",
+  "su_command": "supef",
+  "parameters": {
+    "dt": "",
+    "minlag": "dt",
+    "maxlag": "last",
+    "pnoise": "0.001",
+    "mincorr": "tmin",
+    "maxcorr": "tmax",
+    "showwiener": "0",
+    "mix": "1"
+  },
+  "parameter_types": {
+    "dt": "float",
+    "minlag": "float",
+    "maxlag": "float",
+    "pnoise": "float",
+    "mincorr": "float",
+    "maxcorr": "float",
+    "showwiener": "int",
+    "mix": "str"
+  },
+  "parameter_descriptions": {
+    "dt": "Time sampling interval (sec) - mandatory if not set in header",
+    "minlag": "First lag of prediction filter (sec)",
+    "maxlag": "Last lag of prediction filter (default is (tmax-tmin)/20)",
+    "pnoise": "Relative additive noise level",
+    "mincorr": "Start of autocorrelation window (sec)",
+    "maxcorr": "End of autocorrelation window (sec)",
+    "showwiener": "Set to 1 to show Wiener filter on each trace",
+    "mix": "Array of weights (floats) for moving average of the autocorrelations"
+  },
+  "required_params": [],
+  "dependencies": [],
+  "category": "Deconvolution & Shaping"
+}

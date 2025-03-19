@@ -1,0 +1,14 @@
+{
+    "display_name": "Load SU File",
+    "name": "cat",
+    "su_command": "cat",
+    "category": "Input/Output",
+    "description": "Loads a Seismic Unix file",
+    "required_params": ["input_file"],
+    "parameters": {
+        "input_file": ""
+    },
+    "parameter_types": {
+        "input_file": "file"
+    }
+}

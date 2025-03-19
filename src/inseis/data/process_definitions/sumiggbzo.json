@@ -1,0 +1,48 @@
+{
+  "name": "SUMIGGBZO",
+  "display_name": "SUMIGGBZO",
+  "description": "Migration via Gaussian Beams of Zero-Offset SU data",
+  "su_command": "sumiggbzo",
+  "parameters": {
+    "vfile": "",
+    "nz": "",
+    "dt": "",
+    "dx": "1.0",
+    "dz": "1.0",
+    "fmin": "0.025/dt",
+    "fmax": "10*fmin",
+    "amin": "-amax",
+    "amax": "60",
+    "bwh": "0.5*vavg/fmin"
+  },
+  "parameter_types": {
+    "vfile": "file",
+    "nz": "int",
+    "dt": "float",
+    "dx": "float",
+    "dz": "float",
+    "fmin": "float",
+    "fmax": "float",
+    "amin": "float",
+    "amax": "float",
+    "bwh": "float"
+  },
+  "parameter_descriptions": {
+    "vfile": "Name of file containing v(x,z)",
+    "nz": "Number of depth samples",
+    "dt": "Time sampling interval (from header)",
+    "dx": "Spatial sampling interval (from header(d2) or 1.0)",
+    "dz": "Depth sampling interval",
+    "fmin": "Minimum frequency (default: 0.025/dt)",
+    "fmax": "Maximum frequency (default: 10*fmin)",
+    "amin": "Minimum emergence angle; must be > -90 degrees (default: -amax)",
+    "amax": "Maximum emergence angle; must be < 90 degrees",
+    "bwh": "Beam half-width; vavg denotes average velocity"
+  },
+  "required_params": [
+    "vfile",
+    "nz"
+  ],
+  "dependencies": [],
+  "category": "Migration & Inversion"
+}

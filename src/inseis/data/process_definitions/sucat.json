@@ -1,0 +1,23 @@
+{
+  "display_name": "00_Load_SU",
+  "su_name": "cat",
+  "su_abbr": "",
+  "description": "Load SU data from file",
+  "parameters": [
+    {
+      "name": "input_file",
+      "type": "file",
+      "default": "",
+      "required": true,
+      "description": "Input SU file path"
+    },
+    {
+      "name": "save_output",
+      "type": "boolean",
+      "default": false,
+      "required": false,
+      "description": "Whether to save the output"
+    }
+  ],
+  "category": "Uncategorized"
+}

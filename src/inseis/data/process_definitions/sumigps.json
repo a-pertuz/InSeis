@@ -1,0 +1,45 @@
+{
+  "name": "SUMIGPS",
+  "display_name": "SUMIGPS",
+  "description": "Migration by Phase Shift with turning rays",
+  "su_command": "sumigps",
+  "parameters": {
+    "dt": "",
+    "dx": "",
+    "ffil": "0,0,0.5/dt,0.5/dt",
+    "tmig": "0.0",
+    "vmig": "1500.0",
+    "vfile": "",
+    "nxpad": "0",
+    "ltaper": "0",
+    "verbose": "0",
+    "tmpdir": ""
+  },
+  "parameter_types": {
+    "dt": "float",
+    "dx": "float",
+    "ffil": "str",
+    "tmig": "str",
+    "vmig": "str",
+    "vfile": "file",
+    "nxpad": "int",
+    "ltaper": "int",
+    "verbose": "int",
+    "tmpdir": "str"
+  },
+  "parameter_descriptions": {
+    "dt": "Time sampling interval (from header or .004)",
+    "dx": "Distance between successive cdp's (from header(d2) or 1.0)",
+    "ffil": "Trapezoidal window of frequencies to migrate",
+    "tmig": "Times corresponding to interval velocities in vmig",
+    "vmig": "Interval velocities corresponding to times in tmig",
+    "vfile": "Binary (non-ascii) file containing velocities v(t)",
+    "nxpad": "Number of cdps to pad with zeros before FFT",
+    "ltaper": "Length of linear taper for left and right edges",
+    "verbose": "Set to 1 for diagnostic print",
+    "tmpdir": "Directory path prefix for storing temporary files"
+  },
+  "required_params": [],
+  "dependencies": [],
+  "category": "Migration & Inversion"
+}

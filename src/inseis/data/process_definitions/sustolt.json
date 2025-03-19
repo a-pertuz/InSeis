@@ -1,0 +1,58 @@
+{
+  "name": "SUSTOLT",
+  "display_name": "SUSTOLT",
+  "description": "Stolt migration for stacked data or common-offset gathers",
+  "su_command": "sustolt",
+  "parameters": {
+    "cdpmin": "",
+    "cdpmax": "",
+    "dxcdp": "",
+    "noffmix": "1",
+    "tmig": "0.0",
+    "vmig": "1500.0",
+    "smig": "1.0",
+    "vscale": "1.0",
+    "fmax": "",
+    "lstaper": "0",
+    "lbtaper": "0",
+    "verbose": "0",
+    "tmpdir": ""
+  },
+  "parameter_types": {
+    "cdpmin": "str",
+    "cdpmax": "str",
+    "dxcdp": "str",
+    "noffmix": "str",
+    "tmig": "str",
+    "vmig": "str",
+    "smig": "str",
+    "vscale": "str",
+    "fmax": "str",
+    "lstaper": "str",
+    "lbtaper": "str",
+    "verbose": "str",
+    "tmpdir": "str"
+  },
+  "parameter_descriptions": {
+    "cdpmin": "Minimum CDP number (integer) for which to apply DMO",
+    "cdpmax": "Maximum CDP number (integer) for which to apply DMO",
+    "dxcdp": "Distance between adjacent CDP bins (m)",
+    "noffmix": "Number of offsets to mix (for unstacked data only)",
+    "tmig": "Times corresponding to RMS velocities in vmig (s)",
+    "vmig": "RMS velocities corresponding to times in tmig (m/s)",
+    "smig": "Stretch factor (0.6 typical if vrms increasing)",
+    "vscale": "Scale factor to apply to velocities",
+    "fmax": "Maximum frequency in input data (Hz), defaults to Nyquist",
+    "lstaper": "Length of side tapers (# of traces)",
+    "lbtaper": "Length of bottom taper (# of samples)",
+    "verbose": "1 for diagnostic print, 0 for no printing",
+    "tmpdir": "Directory path prefix for storing temporary files"
+  },
+  "required_params": [
+    "cdpmin",
+    "cdpmax",
+    "dxcdp"
+  ],
+  "dependencies": [],
+  "category": "Migration & Inversion"
+}

@@ -1,0 +1,48 @@
+{
+  "name": "SUKTMIG2D",
+  "display_name": "SUKTMIG2D",
+  "description": "Prestack time migration of a common-offset section with the double-square root (DSR) operator",
+  "su_command": "suktmig2d",
+  "parameters": {
+    "vfile": "",
+    "dx": "",
+    "fcdpdata": "tr.cdp",
+    "firstcdp": "fcdpdata",
+    "lastcdp": "",
+    "dcdp": "",
+    "angmax": "40",
+    "hoffset": ".5*tr.offset",
+    "nfc": "16",
+    "fwidth": "5"
+  },
+  "parameter_types": {
+    "vfile": "file",
+    "dx": "float",
+    "fcdpdata": "str",
+    "firstcdp": "str",
+    "lastcdp": "str",
+    "dcdp": "str",
+    "angmax": "float",
+    "hoffset": "str",
+    "nfc": "int",
+    "fwidth": "int"
+  },
+  "parameter_descriptions": {
+    "vfile": "RMS velocity file (units/s) v(t,x) as a function of time",
+    "dx": "Distance (units) between consecutive traces",
+    "fcdpdata": "First cdp in data",
+    "firstcdp": "First cdp number in velocity file",
+    "lastcdp": "Last cdp number in velocity file (from header)",
+    "dcdp": "Number of cdps between consecutive traces (from header)",
+    "angmax": "Maximum aperture angle for migration (degrees)",
+    "hoffset": "Half offset",
+    "nfc": "Number of Fourier-coefficients to approximate low-pass filters",
+    "fwidth": "High-end frequency increment for the low-pass filters in Hz"
+  },
+  "required_params": [
+    "vfile",
+    "dx"
+  ],
+  "dependencies": [],
+  "category": "Migration & Inversion"
+}

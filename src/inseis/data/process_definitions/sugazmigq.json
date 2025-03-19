@@ -1,0 +1,56 @@
+{
+  "name": "SUGAZMIG",
+  "display_name": "SUGAZMIG",
+  "description": "Gazdag's phase-shift migration for zero-offset data, with attenuation Q",
+  "su_command": "sugazmig",
+  "parameters": {
+    "dt": ".004",
+    "dx": "1.0",
+    "ft": "0.0",
+    "ntau": "",
+    "dtau": "",
+    "ftau": "ft",
+    "tmig": "0.0",
+    "vmig": "1500.0",
+    "vfile": "",
+    "Q": "1e6",
+    "ceil": "1e6",
+    "verbose": "0",
+    "tmpdir": ""
+  },
+  "parameter_types": {
+    "dt": "float",
+    "dx": "float",
+    "ft": "float",
+    "ntau": "int",
+    "dtau": "float",
+    "ftau": "float",
+    "tmig": "str",
+    "vmig": "str",
+    "vfile": "file",
+    "Q": "float",
+    "ceil": "float",
+    "verbose": "int",
+    "tmpdir": "str"
+  },
+  "parameter_descriptions": {
+    "dt": "Time sampling interval (from header or .004)",
+    "dx": "Midpoint sampling interval (from header or 1.0)",
+    "ft": "First time sample",
+    "ntau": "Number of migrated time samples (default=nt from data)",
+    "dtau": "Migrated time sampling interval (default=dt from header)",
+    "ftau": "First migrated time sample",
+    "tmig": "Times corresponding to interval velocities in vmig",
+    "vmig": "Interval velocities corresponding to times in tmig",
+    "vfile": "Name of file containing velocities",
+    "Q": "Quality factor",
+    "ceil": "Gain ceiling beyond which migration ceases",
+    "verbose": "Set to 1 to echo information",
+    "tmpdir": "Directory path prefix for storing temporary files"
+  },
+  "required_params": [
+    "vfile"
+  ],
+  "dependencies": [],
+  "category": "Migration & Inversion"
+}

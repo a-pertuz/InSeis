@@ -1,0 +1,39 @@
+{
+  "name": "SUFXDECON",
+  "display_name": "SUFXDECON",
+  "description": "Random noise attenuation by FX-DECONvolution",
+  "su_command": "sufxdecon",
+  "parameters": {
+    "taper": "0.1",
+    "fmin": "6.0",
+    "fmax": ".6/(2*dt)",
+    "twlen": "entire trace",
+    "ntrw": "10",
+    "ntrf": "4",
+    "verbose": "0",
+    "tmpdir": ""
+  },
+  "parameter_types": {
+    "taper": "float",
+    "fmin": "float",
+    "fmax": "float",
+    "twlen": "str",
+    "ntrw": "int",
+    "ntrf": "int",
+    "verbose": "int",
+    "tmpdir": "str"
+  },
+  "parameter_descriptions": {
+    "taper": "Length of taper",
+    "fmin": "Minimum frequency to process in Hz (accord to twlen)",
+    "fmax": "Maximum frequency to process in Hz",
+    "twlen": "Time window length (minimum 300ms for lower freqs)",
+    "ntrw": "Number of traces in window",
+    "ntrf": "Number of traces for filter (smaller than ntrw)",
+    "verbose": "Set to 1 for diagnostic print",
+    "tmpdir": "Directory path prefix for storing temporary files"
+  },
+  "required_params": [],
+  "dependencies": [],
+  "category": "Deconvolution & Shaping"
+}

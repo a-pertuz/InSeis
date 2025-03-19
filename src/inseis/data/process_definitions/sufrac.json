@@ -1,0 +1,29 @@
+{
+  "name": "SUFRAC",
+  "display_name": "SUFRAC",
+  "description": "Take general (fractional) time derivative or integral of data, plus a phase shift",
+  "su_command": "sufrac",
+  "parameters": {
+    "power": "0",
+    "sign": "-1",
+    "dt": "",
+    "phasefac": "0"
+  },
+  "parameter_types": {
+    "power": "float",
+    "sign": "int",
+    "dt": "float",
+    "phasefac": "float"
+  },
+  "parameter_descriptions": {
+    "power": "Exponent of (-i*omega): 0=phase shift only, >0=differentiation, <0=integration",
+    "sign": "Sign in front of i * omega",
+    "dt": "Time sample interval (in seconds)",
+    "phasefac": "Phase shift by phase=phasefac*PI"
+  },
+  "required_params": [
+    "power"
+  ],
+  "dependencies": [],
+  "category": "Filters"
+}

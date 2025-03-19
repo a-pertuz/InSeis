@@ -1,0 +1,24 @@
+{
+  "name": "SUOP2",
+  "display_name": "SUOP2",
+  "description": "Do a binary operation on two data sets",
+  "su_command": "suop2",
+  "parameters": {
+    "op": "diff",
+    "w1": "1.0",
+    "w2": "1.0"
+  },
+  "parameter_types": {
+    "op": "str",
+    "w1": "float",
+    "w2": "float"
+  },
+  "parameter_descriptions": {
+    "op": "Operation to perform: diff (difference), sum, prod (product), quo (quotient), ptdiff, ptsum, ptprod, ptquo",
+    "w1": "Weighting coefficient for the first dataset",
+    "w2": "Weighting coefficient for the second dataset"
+  },
+  "required_params": [],
+  "dependencies": [],
+  "category": "Operations"
+}

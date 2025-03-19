@@ -1,0 +1,24 @@
+{
+  "name": "SUTVBAND",
+  "display_name": "SUTVBAND",
+  "description": "Time-variant bandpass filter (sine-squared taper)",
+  "su_command": "sutvband",
+  "parameters": {
+    "tf": "",
+    "f": ""
+  },
+  "parameter_types": {
+    "tf": "str",
+    "f": "str"
+  },
+  "parameter_descriptions": {
+    "tf": "Times for which f-vector is specified",
+    "f": "Corner frequencies corresponding to the times in tf. Format: f1,f2,f3,f4"
+  },
+  "required_params": [
+    "tf",
+    "f"
+  ],
+  "dependencies": [],
+  "category": "Filters"
+}

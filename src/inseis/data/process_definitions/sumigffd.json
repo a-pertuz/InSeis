@@ -1,0 +1,43 @@
+{
+  "name": "SUMIGFFD",
+  "display_name": "SUMIGFFD",
+  "description": "Fourier finite difference migration for zero-offset data",
+  "su_command": "sumigffd",
+  "parameters": {
+    "nz": "",
+    "dz": "",
+    "vfile": "",
+    "dt": ".004",
+    "dx": "1.0",
+    "ft": "0.0",
+    "fz": "0.0",
+    "tmpdir": ""
+  },
+  "parameter_types": {
+    "nz": "int",
+    "dz": "float",
+    "vfile": "file",
+    "dt": "float",
+    "dx": "float",
+    "ft": "float",
+    "fz": "float",
+    "tmpdir": "str"
+  },
+  "parameter_descriptions": {
+    "nz": "Number of depth samples",
+    "dz": "Depth sampling interval",
+    "vfile": "Name of file containing velocities",
+    "dt": "Time sampling interval (from header or .004)",
+    "dx": "Midpoint sampling interval (from header or 1.0)",
+    "ft": "First time sample",
+    "fz": "First depth sample",
+    "tmpdir": "Directory path prefix for storing temporary files"
+  },
+  "required_params": [
+    "nz",
+    "dz",
+    "vfile"
+  ],
+  "dependencies": [],
+  "category": "Migration & Inversion"
+}

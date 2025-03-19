@@ -1,0 +1,12 @@
+{
+  "name": "SEGYCLEAN",
+  "display_name": "SEGYCLEAN",
+  "description": "Zero out unassigned portion of header",
+  "su_command": "segyclean",
+  "parameters": {},
+  "parameter_types": {},
+  "parameter_descriptions": {},
+  "required_params": [],
+  "dependencies": [],
+  "category": "Data Conversion"
+}

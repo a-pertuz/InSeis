@@ -1,0 +1,24 @@
+{
+  "name": "SUACOR",
+  "display_name": "SUACOR",
+  "description": "Auto-correlation",
+  "su_command": "suacor",
+  "parameters": {
+    "ntout": "101",
+    "norm": "1",
+    "sym": "1"
+  },
+  "parameter_types": {
+    "ntout": "int",
+    "norm": "int",
+    "sym": "int"
+  },
+  "parameter_descriptions": {
+    "ntout": "Odd number of time samples output",
+    "norm": "If non-zero, normalize maximum absolute output to 1",
+    "sym": "If non-zero, produce a symmetric output from lag -(ntout-1)/2 to lag +(ntout-1)/2"
+  },
+  "required_params": [],
+  "dependencies": [],
+  "category": "Convolution & Correlation"
+}

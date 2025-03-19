@@ -1,0 +1,42 @@
+{
+  "name": "SUMEDIAN",
+  "display_name": "SUMEDIAN",
+  "description": "MEDIAN filter about a user-defined polygonal curve with the distance along the curve specified by key header word",
+  "su_command": "sumedian",
+  "parameters": {
+    "xshift": "",
+    "tshift": "",
+    "nshift": "",
+    "xfile": "",
+    "tfile": "",
+    "key": "tracl",
+    "mix": ".6,1,1,1,.6",
+    "verbose": "0",
+    "tmpdir": ""
+  },
+  "parameter_types": {
+    "xshift": "str",
+    "tshift": "str",
+    "nshift": "int",
+    "xfile": "file",
+    "tfile": "file",
+    "key": "str",
+    "mix": "str",
+    "verbose": "int",
+    "tmpdir": "str"
+  },
+  "parameter_descriptions": {
+    "xshift": "Array of position values as specified by the 'key' parameter",
+    "tshift": "Array of corresponding time values (sec)",
+    "nshift": "Number of x,t values defining median times",
+    "xfile": "File containing position values as specified by the 'key' parameter",
+    "tfile": "File containing corresponding time values (sec)",
+    "key": "Key header word specifying trace number (=offset to use trace offset instead)",
+    "mix": "Array of weights for mix (weighted moving average)",
+    "verbose": "Set to 1 to echo information",
+    "tmpdir": "Directory path prefix for storing temporary files"
+  },
+  "required_params": [],
+  "dependencies": [],
+  "category": "Filters"
+}

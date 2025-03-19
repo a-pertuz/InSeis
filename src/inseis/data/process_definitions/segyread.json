@@ -1,0 +1,20 @@
+{
+  "name": "SEGYREAD",
+  "display_name": "SEGYREAD",
+  "description": "Read an SEG-Y tape or file",
+  "su_command": "segyread",
+  "parameters": {
+    "tape": ""
+  },
+  "parameter_types": {
+    "tape": "file"
+  },
+  "parameter_descriptions": {
+    "tape": "Input tape device or SEG-Y filename (required)"
+  },
+  "required_params": [
+    "tape"
+  ],
+  "dependencies": [],
+  "category": "Data Conversion"
+}

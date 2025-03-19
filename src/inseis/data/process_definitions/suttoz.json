@@ -1,0 +1,36 @@
+{
+  "name": "SUTTOZ",
+  "display_name": "SUTTOZ",
+  "description": "Resample from time to depth",
+  "su_command": "suttoz",
+  "parameters": {
+    "nz": "",
+    "dz": "vmin*dt/2",
+    "fz": "v(ft)*ft/2",
+    "t": "0.0",
+    "v": "1500.0",
+    "vfile": "",
+    "verbose": "1"
+  },
+  "parameter_types": {
+    "nz": "int",
+    "dz": "float",
+    "fz": "float",
+    "t": "str",
+    "v": "str",
+    "vfile": "file",
+    "verbose": "int"
+  },
+  "parameter_descriptions": {
+    "nz": "Number of depth samples",
+    "dz": "Depth sampling interval (defaults avoids aliasing)",
+    "fz": "First depth sample",
+    "t": "Times corresponding to interval velocities in v",
+    "v": "Interval velocities corresponding to times in v",
+    "vfile": "Binary (non-ascii) file containing velocities v(t)",
+    "verbose": "Set >0 to print depth sampling information"
+  },
+  "required_params": [],
+  "dependencies": [],
+  "category": "Stretching & Moveout"
+}
