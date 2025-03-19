@@ -87,7 +87,15 @@ CACHE_DIR = appdirs.user_cache_dir(APP_NAME)
 # Specific paths
 CONFIG_FILE = os.path.join(CONFIG_DIR, "config.json")
 
-WSL_CWPROOT = None  
+# Get WSL CWPROOT if available
+WSL_CWPROOT = detect_cwproot_from_wsl() 
+
+# Default settings
+DEFAULT_CONFIG = {
+    "cwproot": WSL_CWPROOT,
+    "first_run_completed": False,
+    "data_dir": DATA_DIR
+    }
 
 # Default settings
 DEFAULT_CONFIG = { 
