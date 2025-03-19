@@ -97,11 +97,6 @@ DEFAULT_CONFIG = {
     "data_dir": DATA_DIR
     }
 
-# Default settings
-DEFAULT_CONFIG = { 
-    "first_run_completed": False,
-    "data_dir": DATA_DIR
-    }
 
 def ensure_config_directory():
     """Ensure config directory exists"""
