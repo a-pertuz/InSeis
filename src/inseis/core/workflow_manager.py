@@ -3,6 +3,9 @@
 import os
 import json
 import subprocess
+import threading
+import select
+import io
 from datetime import datetime
 
 from ..config import settings
@@ -73,6 +76,44 @@ def execute_workflow(processes, job_name, console=None):
     job_dir = os.path.join(JOBS_DIR, f"{job_name}_{timestamp}")
     os.makedirs(job_dir, exist_ok=True)
     
+    # Create log file at the beginning
+    history_file = os.path.join(job_dir, "workflow_history.txt")
+    with open(history_file, 'w') as f:
+        f.write(f"Workflow: {job_name}\n")
+        f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+        f.write(f"Total Steps: {len(processes)}\n\n")
+        
+        # Write a detailed summary of the workflow that will be executed
+        f.write(f"{'='*40}\n")
+        f.write("WORKFLOW EXECUTION PLAN\n")
+        f.write(f"{'='*40}\n\n")
+        
+        for i, process in enumerate(processes):
+            step_num = i + 1
+            process_name = process.name
+            process_type = process.su_name
+            
+            f.write(f"Step {step_num}: {process_name} ({process_type})\n")
+            
+            # Write the parameters for this process
+            params = process.get_parameters()
+            if params:
+                f.write("  Parameters:\n")
+                for param_name, param_value in params.items():
+                    if param_value:  # Only show non-empty parameters
+                        f.write(f"    - {param_name}: {param_value}\n")
+            else:
+                f.write("  No parameters set\n")
+            
+            # Add a separator between steps
+            if i < len(processes) - 1:
+                f.write("\n" + "-"*30 + "\n\n")
+        
+        # End of workflow plan
+        f.write(f"\n{'='*40}\n")
+        f.write("EXECUTION LOG\n")
+        f.write(f"{'='*40}\n\n")
+    
     # Results dictionary
     results = {
         "success": False,
@@ -82,7 +123,8 @@ def execute_workflow(processes, job_name, console=None):
         "errors": [],
         "commands": [],
         "outputs": [],  # Store command outputs for history
-        "output_files": []  # Store output file paths for visualization
+        "output_files": [],  # Store output file paths for visualization
+        "history_file": history_file  # Store the history file path
     }
     
     # Get base file name for inputs/outputs - first try to get from the first process's input file
@@ -97,132 +139,241 @@ def execute_workflow(processes, job_name, console=None):
         console.append(f"Created job directory: {job_dir}")
         console.append(f"Using base file name: {base_file_name}")
     
+    # Log this information to the history file
+    _append_to_history(history_file, f"Created job directory: {job_dir}\n")
+    _append_to_history(history_file, f"Using base file name: {base_file_name}\n\n")
+    
     # Track previous output for chaining and process chain naming
     previous_output = None
     process_chain = []
     
-    # Process each step
-    for i, process in enumerate(processes):
-        step_num = i + 1
-        if console:
-            # Format step message with proper numbering
-            console.append(f"Step {step_num}/{len(processes)}: Running {process.name}")
-        
-        # Get process name without "su" prefix for the file naming
-        process_name = process.su_name
-        if process_name.startswith("su"):
-            process_name = process_name[2:]
-        
-        # Add this process to the chain
-        process_chain.append(process_name)
-        
-        # Output file with descriptive name stored directly in job folder
-        output_filename = f"{base_file_name}_{'_'.join(process_chain)}.su"
-        output_file = os.path.join(job_dir, output_filename)
-        
-        # Save output file information for visualization
-        display_name = f"Step {step_num}: {process.name}"
-        results["output_files"].append((display_name, output_file))
-        
-        # Convert to WSL path
-        wsl_output = PathConverter.windows_to_wsl(output_file)
-        
-        # Prepare command
-        try:
-            command = process.build_command(previous_output, wsl_output)
+    try:
+        # Process each step
+        for i, process in enumerate(processes):
+            step_num = i + 1
+            step_header = f"Step {step_num}/{len(processes)}: Running {process.name}"
             
             if console:
-                console.append(f"Command: {command}")
+                # Format step message with proper numbering
+                console.append(step_header)
             
-            # Execute command with simpler output handling
-            result = subprocess.run(
-                f'wsl bash -c "{command}"',
-                shell=True,
-                text=True,
-                capture_output=True
-            )
+            # Log step beginning to history file
+            _append_to_history(history_file, f"\n{'='*40}\n{step_header}\n{'='*40}\n")
             
-            # Store command and output for history
-            results["commands"].append(command)
+            # Get process name without "su" prefix for the file naming
+            process_name = process.su_name
+            if process_name.startswith("su"):
+                process_name = process_name[2:]
             
-            # Store the command output for the history file
-            output = {
-                "stdout": result.stdout,
-                "stderr": result.stderr,
-                "return_code": result.returncode
-            }
-            results["outputs"].append(output)
+            # Add this process to the chain
+            process_chain.append(process_name)
             
-            if result.returncode != 0:
-                error_msg = f"Command failed: {result.stderr or 'Unknown error'}"
+            # Output file with descriptive name stored directly in job folder
+            output_filename = f"{base_file_name}_{'_'.join(process_chain)}.su"
+            output_file = os.path.join(job_dir, output_filename)
+            
+            # Save output file information for visualization
+            display_name = f"Step {step_num}: {process.name}"
+            results["output_files"].append((display_name, output_file))
+            
+            # Convert to WSL path
+            wsl_output = PathConverter.windows_to_wsl(output_file)
+            
+            # Prepare command
+            try:
+                command = process.build_command(previous_output, wsl_output)
+                
+                # Log command to both console and history file
+                if console:
+                    console.append(f"Command: {command}")
+                _append_to_history(history_file, f"Command: {command}\n\n")
+                
+                # Store command for history
+                results["commands"].append(command)
+                
+                # Execute command with output handling - using Popen for real-time output
+                if console:
+                    console.append("Executing command...")
+                
+                # Start the process
+                process_obj = subprocess.Popen(
+                    f'wsl bash -c "{command}"',
+                    shell=True,
+                    text=True,
+                    stdout=subprocess.PIPE,
+                    stderr=subprocess.PIPE,
+                    bufsize=1,
+                    universal_newlines=True
+                )
+                
+                # Set up variables to collect output
+                stdout_data = []
+                stderr_data = []
+                
+                # Function to efficiently read from pipe and handle output in chunks
+                def read_output(pipe, data_list, prefix):
+                    """Read data from pipe and collect it in chunks for efficient processing."""
+                    buffer = io.StringIO()
+                    
+                    while True:
+                        line = pipe.readline()
+                        if not line:
+                            break
+                            
+                        # Add to our buffer
+                        buffer.write(line)
+                        data_list.append(line)
+                        
+                        # If we've accumulated enough lines or the line is very long, send to console
+                        if buffer.tell() > 1024:  # Send in ~1KB chunks
+                            content = buffer.getvalue()
+                            if console:
+                                console.append(f"{prefix}: {content.strip()}")
+                            buffer = io.StringIO()  # Reset buffer
+                    
+                    # Get any remaining content
+                    remaining = buffer.getvalue()
+                    if remaining and console:
+                        console.append(f"{prefix}: {remaining.strip()}")
+                
+                # Create and start output reader threads
+                stdout_thread = threading.Thread(
+                    target=read_output, 
+                    args=(process_obj.stdout, stdout_data, "OUT")
+                )
+                stderr_thread = threading.Thread(
+                    target=read_output, 
+                    args=(process_obj.stderr, stderr_data, "ERR")
+                )
+                
+                stdout_thread.daemon = True
+                stderr_thread.daemon = True
+                stdout_thread.start()
+                stderr_thread.start()
+                
+                # Wait for process to complete
+                return_code = process_obj.wait()
+                
+                # Wait for output threads to finish
+                stdout_thread.join()
+                stderr_thread.join()
+                
+                # Combine the output data
+                stdout_text = ''.join(stdout_data)
+                stderr_text = ''.join(stderr_data)
+                
+                # Store the command output for the history file
+                output = {
+                    "stdout": stdout_text,
+                    "stderr": stderr_text,
+                    "return_code": return_code
+                }
+                results["outputs"].append(output)
+                
+                # Log command output to history file
+                _append_to_history(history_file, "Command Output:\n")
+                if stdout_text:
+                    _append_to_history(history_file, "--- STDOUT ---\n")
+                    _append_to_history(history_file, stdout_text)
+                    _append_to_history(history_file, "\n\n")
+                
+                if stderr_text:
+                    _append_to_history(history_file, "--- STDERR ---\n")
+                    _append_to_history(history_file, stderr_text)
+                    _append_to_history(history_file, "\n\n")
+                
+                _append_to_history(history_file, f"Return Code: {return_code}\n\n")
+                
+                if return_code != 0:
+                    error_msg = f"Command failed: {stderr_text or 'Unknown error'}"
+                    if console:
+                        console.append(f"ERROR: {error_msg}")
+                    results["errors"].append(error_msg)
+                    _append_to_history(history_file, f"ERROR: {error_msg}\n")
+                    _append_to_history(history_file, "Workflow execution aborted due to error.\n")
+                    break
+                
+                # Update previous output for chaining
+                previous_output = wsl_output
+                results["steps_completed"] += 1
+                
+                if console:
+                    console.append(f"Step {step_num} completed successfully.")
+                _append_to_history(history_file, f"Step {step_num} completed successfully.\n")
+                
+            except Exception as e:
+                error_msg = str(e)
                 if console:
                     console.append(f"ERROR: {error_msg}")
                 results["errors"].append(error_msg)
+                _append_to_history(history_file, f"ERROR: {error_msg}\n")
+                _append_to_history(history_file, "Workflow execution aborted due to exception.\n")
                 break
             
-            # Update previous output for chaining
-            previous_output = wsl_output
-            results["steps_completed"] += 1
-            
+        # If we have remaining steps, mark them as skipped
+        for i in range(results["steps_completed"], len(processes)):
+            step_num = i + 1
+            skip_msg = f"Skipping step {step_num}: {processes[i].name} (previous step failed)"
             if console:
-                console.append(f"Step {step_num} completed successfully.")
-            
-        except Exception as e:
-            error_msg = str(e)
-            if console:
-                console.append(f"ERROR: {error_msg}")
-            results["errors"].append(error_msg)
-            break
+                console.append(skip_msg)
+            _append_to_history(history_file, f"{skip_msg}\n")
         
-    # If we have remaining steps, mark them as skipped
-    for i in range(results["steps_completed"], len(processes)):
-        step_num = i + 1
+        # Write workflow summary
+        _append_to_history(history_file, f"\n{'='*40}\nWORKFLOW SUMMARY\n{'='*40}\n")
+        _append_to_history(history_file, f"Steps completed: {results['steps_completed']}/{results['total_steps']}\n")
+        _append_to_history(history_file, f"Success: {len(results['errors']) == 0}\n")
+        if results["errors"]:
+            _append_to_history(history_file, "Errors:\n")
+            for err in results["errors"]:
+                _append_to_history(history_file, f"- {err}\n")
+        
+        # Set success flag
+        results["success"] = len(results["errors"]) == 0
+        
         if console:
-            console.append(f"Skipping step {step_num}: {processes[i].name} (previous step failed)")
+            console.append(f"Workflow execution completed: {results['steps_completed']}/{results['total_steps']} steps successful")
+            console.append(f"Results saved in: {job_dir}")
+            
+        # Explicitly ensure all resources are released
+        import gc
+        gc.collect()
+            
+        return results
     
-    # Save workflow history with detailed output
-    try:
-        history_file = os.path.join(job_dir, "workflow_history.txt")
-        with open(history_file, 'w') as f:
-            f.write(f"Workflow: {job_name}\n")
-            f.write(f"Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
-            
-            for i, cmd in enumerate(results["commands"]):
-                f.write(f"Step {i+1}: {processes[i].name}\n")
-                f.write(f"Command: {cmd}\n\n")
-                
-                # Add detailed output if available
-                if i < len(results["outputs"]):
-                    output = results["outputs"][i]
-                    f.write("Command Output:\n")
-                    
-                    if output["stdout"]:
-                        f.write("--- STDOUT ---\n")
-                        f.write(output["stdout"])
-                        f.write("\n\n")
-                        
-                    if output["stderr"]:
-                        f.write("--- STDERR ---\n")
-                        f.write(output["stderr"])
-                        f.write("\n\n")
-                        
-                    f.write(f"Return Code: {output['return_code']}\n\n")
-                    f.write("-" * 50 + "\n\n")
-        
-        if console:
-            console.append(f"Command history saved to: {history_file}")
     except Exception as e:
-        if console:
-            console.append(f"ERROR: Failed to save workflow history: {str(e)}")
-    
-    # Set success flag
-    results["success"] = len(results["errors"]) == 0
-    
-    if console:
-        console.append(f"Workflow execution completed: {results['steps_completed']}/{results['total_steps']} steps successful")
-        console.append(f"Results saved in: {job_dir}")
+        # Catch any unexpected exceptions during workflow execution
+        error_msg = f"Unexpected error in workflow execution: {str(e)}"
+        import traceback
+        error_details = traceback.format_exc()
         
-    return results
+        # Log to history file
+        _append_to_history(history_file, f"\n{'='*40}\nUNEXPECTED ERROR\n{'='*40}\n")
+        _append_to_history(history_file, f"{error_msg}\n\n")
+        _append_to_history(history_file, f"Error details:\n{error_details}\n")
+        
+        # Log to console
+        if console:
+            console.append(f"ERROR: {error_msg}")
+        
+        # Add to results
+        if "errors" in results:
+            results["errors"].append(error_msg)
+        
+        # Set success flag
+        results["success"] = False
+        
+        return results
+
+def _append_to_history(history_file, text):
+    """
+    Append text to history file with error handling.
+    This ensures logs are written even if the program crashes later.
+    """
+    try:
+        with open(history_file, 'a') as f:
+            f.write(text)
+    except Exception as e:
+        print(f"Error writing to history file: {e}")
 
 def save_workflow(workflow_processes, name, description=""):
     """Save a workflow to file."""

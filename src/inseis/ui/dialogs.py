@@ -2,8 +2,8 @@
 
 from PySide6.QtWidgets import (QDialog, QVBoxLayout, QHBoxLayout, QListWidget, QFormLayout,
                               QLineEdit, QPushButton, QLabel, QTextEdit, QMessageBox,
-                              QListWidgetItem, QProgressBar, QDialogButtonBox)
-from PySide6.QtCore import Qt, Signal, QTimer
+                              QListWidgetItem, QDialogButtonBox)
+from PySide6.QtCore import Qt
 
 from ..core import workflow_manager
 
@@ -142,66 +142,4 @@ class LoadWorkflowDialog(QDialog):
             else:
                 QMessageBox.warning(self, "Error", message)
 
-class WorkflowProgressDialog(QDialog):
-    """Dialog shown during workflow execution."""
-    
-    def __init__(self, parent=None, job_name=""):
-        super().__init__(parent)
-        self.setWindowTitle("Running Workflow")
-        self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
-        self.setMinimumWidth(400)
-        self.setAttribute(Qt.WA_DeleteOnClose, True)
-        self.setModal(True)
-        
-        # Create main layout
-        layout = QVBoxLayout(self)
-        
-        # Add job name label
-        if job_name:
-            job_label = QLabel(f"Executing: {job_name}")
-            job_label.setAlignment(Qt.AlignCenter)
-            layout.addWidget(job_label)
-        
-        # Add animated processing label
-        self.status_label = QLabel("Processing workflow...")
-        self.status_label.setAlignment(Qt.AlignCenter)
-        layout.addWidget(self.status_label)
-        
-        # Add indeterminate progress bar
-        self.progress_bar = QProgressBar()
-        self.progress_bar.setRange(0, 0)  # Indeterminate mode
-        layout.addWidget(self.progress_bar)
-        
-        # Add stop button
-        self.button_box = QDialogButtonBox(QDialogButtonBox.Cancel)
-        self.button_box.rejected.connect(self.reject)
-        layout.addWidget(self.button_box)
-        
-        # Setup animation for dots
-        self.dots_count = 0
-        self.animation_timer = QTimer(self)
-        self.animation_timer.setInterval(500)  # Update every 500ms
-        self.animation_timer.timeout.connect(self._update_animation)
-        self.animation_timer.start()
-        
-        # Initial animation update
-        self._update_animation()
-    
-    def _update_animation(self):
-        """Update the animation dots."""
-        self.dots_count = (self.dots_count + 1) % 4
-        dots = "." * self.dots_count
-        self.status_label.setText(f"Processing workflow{dots}")
-    
-    def update_status(self, text):
-        """Update the status text."""
-        self.status_label.setText(text)
-    
-    def set_determinate_progress(self, current, total):
-        """Switch to determinate progress mode with current/total values."""
-        if self.progress_bar.maximum() == 0:  # Currently indeterminate
-            self.progress_bar.setRange(0, total)
-        self.progress_bar.setValue(current)
-        self.status_label.setText(f"Processing step {current} of {total}")
-        
 

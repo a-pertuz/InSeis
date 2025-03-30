@@ -48,7 +48,6 @@ Controls workflow execution in a non-blocking way:
 Contains dialog windows used throughout the application:
 - `SaveWorkflowDialog` - For saving a workflow with name and description
 - `LoadWorkflowDialog` - For loading a saved workflow
-- `WorkflowProgressDialog` - Shows progress during workflow execution
 
 ### help_dialogs.py
 
@@ -96,8 +95,7 @@ Components for visualizing seismic data:
 4. `workflow_panel` displays the updated workflow list
 5. User can select processes in the workflow to edit parameters
 6. When "Run Workflow" is clicked, `workflow_controller` executes the workflow
-7. `WorkflowProgressDialog` shows progress during execution
-8. Upon completion, results are shown in the `visualization` dialog if applicable
+7. Upon completion, results are shown in the `visualization` dialog if applicable
 
 ## Signal Connections
 
