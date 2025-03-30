@@ -220,7 +220,7 @@ class Process:
                 with open(preset_path, 'r') as f:
                     return json.load(f)
             except Exception as e:
-                print(f"Error loading presets for {self.su_name}: {str(e)}")
+                pass
         return {}
     
     def save_preset(self, preset_name, parameter_values=None):
@@ -311,7 +311,7 @@ def load_process_definitions():
             categorized_processes[category][process.name] = process
             
         except Exception as e:
-            print(f"Error loading {filename}: {str(e)}")
+            pass
     
     return available_processes, categorized_processes
 
@@ -325,9 +325,8 @@ def copy_default_definitions():
             if resource.endswith('.json'):
                 destination = os.path.join(settings.PROCESS_DEFINITIONS_DIR, resource)
                 copy_resource_to_file(PROCESS_DEF_PACKAGE, resource, destination)
-                print(f"Copied default process definition: {resource}")
-    except Exception as e:
-        print(f"Error copying default definitions: {str(e)}")
+    except Exception:
+        pass
 
 def load_config():
     """Load configuration file"""

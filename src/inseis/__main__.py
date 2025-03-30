@@ -3,35 +3,12 @@ import os
 import traceback
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QFont
-import logging
 
 from .ui.main_window import InSeis
-
-def setup_logging():
-    """Set up logging configuration."""
-    log_dir = os.path.join(os.path.expanduser("~"), "Documents", "InSeis", "logs")
-    os.makedirs(log_dir, exist_ok=True)
-    
-    log_file = os.path.join(log_dir, "inseis.log")
-    
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-        handlers=[
-            logging.FileHandler(log_file),
-            logging.StreamHandler()
-        ]
-    )
 
 def main():
     try:
         """Main function to start the InSeis application."""
-        # Setup logging first
-        setup_logging()
-        
-
-        
-        logging.info("Starting InSeis application")
         app = QApplication(sys.argv)
         app.setStyle("windowsvista")
         app.setFont(QFont("Segoe UI", 10))
@@ -49,7 +26,6 @@ def main():
         window.setGeometry(pos_x, pos_y, window_width, window_height)
 
         window.show()
-
         
         sys.exit(app.exec())
 

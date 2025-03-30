@@ -2,14 +2,10 @@
 
 from PySide6.QtCore import QObject, Signal, QTimer, QThread
 from PySide6.QtWidgets import QMessageBox, QApplication
-import logging
 import traceback
 import os
 
 from ..core import workflow_manager
-
-# Set up logger
-logger = logging.getLogger(__name__)
 
 class WorkflowOutputHandler:
     """Simple handler for workflow output."""
@@ -56,8 +52,6 @@ class WorkflowExecutionWorker(QObject):
             self.workflowFinished.emit(results)
             
         except Exception as e:
-            logger.error(f"Error in workflow thread: {str(e)}")
-            logger.error(traceback.format_exc())
             self.errorOccurred.emit(f"Error executing workflow: {str(e)}")
     
     class ThreadSafeOutputHandler:
@@ -134,8 +128,6 @@ class WorkflowController(QObject):
             
         except Exception as e:
             error_msg = f"Error setting up workflow execution: {str(e)}"
-            logger.error(error_msg)
-            logger.error(traceback.format_exc())
             if self.console:
                 self.console.log_error(error_msg)
             QMessageBox.critical(self.parent(), "Error", error_msg)
@@ -176,8 +168,6 @@ class WorkflowController(QObject):
         
         except Exception as e:
             error_msg = f"Error processing workflow results: {str(e)}"
-            logger.error(error_msg)
-            logger.error(traceback.format_exc())
             if self.console:
                 self.console.log_error(error_msg)
         
@@ -211,7 +201,7 @@ class WorkflowController(QObject):
             for f in output_files:
                 # Handle different output formats
                 if isinstance(f, tuple):
-                    display_name = f[0]  # First element is the display namef[0]
+                    display_name = f[0]  # First element is the display name
                     filename = f[1]      # Second element is the path to the file
                 else:
                     filename = f
@@ -222,8 +212,5 @@ class WorkflowController(QObject):
                     valid_files.append((display_name, filename))
             
             if valid_files:
-                # Log the files being visualized
-                logger.info(f"Visualizing {len(valid_files)} files from {job_dir}")
-                
                 # Use a timer to delay showing until UI is fully updated
                 QTimer.singleShot(100, lambda: self.visualizationRequested.emit(job_dir, valid_files))

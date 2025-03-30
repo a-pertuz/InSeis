@@ -445,7 +445,6 @@ def load_workflow(file_path, available_processes):
         for proc_data in workflow_data.get('processes', []):
             process_type = proc_data.get('type')
             if not process_type:
-                print("Warning: Process missing type information, skipping")
                 skipped_count += 1
                 continue
             
@@ -467,7 +466,6 @@ def load_workflow(file_path, available_processes):
                         break
             
             if not found:
-                print(f"Warning: Process type {process_type} with name {proc_data.get('name')} not found, skipping")
                 skipped_count += 1
         
         result = {
