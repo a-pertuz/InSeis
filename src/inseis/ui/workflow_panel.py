@@ -31,12 +31,47 @@ class WorkflowPanel(QGroupBox):
         
         # Move buttons
         arrows_layout = QVBoxLayout()
+        
+        # Create stylish arrow buttons with fixed width
         self.up_button = QPushButton("↑")
         self.down_button = QPushButton("↓")
+        
+        # Set fixed width to make buttons narrower
+        button_width = 24
+        self.up_button.setFixedWidth(button_width)
+        self.down_button.setFixedWidth(button_width)
+        
+        # Apply stylesheets for better appearance
+        arrow_button_style = """
+            QPushButton {
+                font-weight: bold;
+                font-size: 14px;
+                border: 1px solid #999;
+                border-radius: 4px;
+                background-color: #f0f0f0;
+                min-height: 24px;
+                max-height: 24px;
+            }
+            QPushButton:hover {
+                background-color: #e0e0e0;
+            }
+            QPushButton:pressed {
+                background-color: #d0d0d0;
+            }
+        """
+        self.up_button.setStyleSheet(arrow_button_style)
+        self.down_button.setStyleSheet(arrow_button_style)
+        
+        # Add buttons to layout with spacing
+        arrows_layout.addSpacing(6)
         arrows_layout.addWidget(self.up_button)
+        arrows_layout.addSpacing(2)
         arrows_layout.addWidget(self.down_button)
         arrows_layout.addStretch()
+        
+        # Add arrows layout to main workflow layout with margins
         workflow_layout.addLayout(arrows_layout)
+        workflow_layout.setStretchFactor(self.workflow_list, 1)  # Give list widget stretch priority
         
         layout.addLayout(workflow_layout)
         

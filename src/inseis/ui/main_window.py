@@ -88,21 +88,24 @@ class InSeis(QMainWindow):
         
         # Top widget for panels
         panels_widget = QWidget()
-        panels_layout = QHBoxLayout(panels_widget)
+        panels_layout = QVBoxLayout(panels_widget)
         panels_layout.setContentsMargins(0, 0, 0, 0)
+        
+        # Create horizontal splitter for the three panels
+        self.horizontal_splitter = QSplitter(Qt.Horizontal)
         
         # Process panel (left)
         self.process_panel = ProcessPanel()
         self.process_panel.set_processes(self.available_processes, self.categorized_processes)
         self.process_panel.processSelected.connect(self.on_process_selected)
-        panels_layout.addWidget(self.process_panel)
+        self.horizontal_splitter.addWidget(self.process_panel)
         
         # Workflow panel (center)
         self.workflow_panel = WorkflowPanel()
         self.workflow_panel.processSelected.connect(self.on_workflow_process_selected)
         self.workflow_panel.runWorkflowRequested.connect(self.run_workflow)
         self.workflow_panel.swapProcesses.connect(self.swap_workflow_processes)
-        panels_layout.addWidget(self.workflow_panel)
+        self.horizontal_splitter.addWidget(self.workflow_panel)
         
         # Parameters panel (right)
         self.parameters_panel = ParametersPanel()
@@ -110,9 +113,17 @@ class InSeis(QMainWindow):
         self.parameters_panel.acceptEditsRequested.connect(self.accept_workflow_edit)
         self.parameters_panel.removeFromWorkflowRequested.connect(self.remove_from_workflow)
         self.parameters_panel.showDocumentation.connect(self.show_su_doc)
-        panels_layout.addWidget(self.parameters_panel, 1)
+        self.horizontal_splitter.addWidget(self.parameters_panel)
         
-        # Add panels widget to the splitter
+        # Add the horizontal splitter to the panels layout
+        panels_layout.addWidget(self.horizontal_splitter)
+        
+        # Set initial sizes for the horizontal splitter (make workflow panel 30% smaller)
+        # Distribution: Process Panel 35%, Workflow Panel 25%, Parameters Panel 40%
+        total_width = 1000  # Arbitrary reference width
+        self.horizontal_splitter.setSizes([int(total_width * 0.25), int(total_width * 0.2), int(total_width * 0.55)])
+        
+        # Add panels widget to the main vertical splitter
         self.main_splitter.addWidget(panels_widget)
         
         # Bottom widget for job name and console
@@ -135,10 +146,10 @@ class InSeis(QMainWindow):
         # Add bottom widget to the splitter
         self.main_splitter.addWidget(bottom_widget)
         
-        # Add the splitter to the main layout
+        # Add the main splitter to the main layout
         main_layout.addWidget(self.main_splitter)
         
-        # Set initial sizes for the splitter (allocate more space to panels initially)
+        # Set initial sizes for the main splitter (allocate more space to panels initially)
         self.main_splitter.setSizes([600, 400])
         
         # Status bar

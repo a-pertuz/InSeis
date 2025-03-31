@@ -92,10 +92,24 @@ class ParametersPanel(QGroupBox):
         if not self.current_process:
             return
         
+        # Add display name as title
+        display_name = self.current_process.definition.get('display_name', self.current_process.name)
+        title_label = QLabel(display_name)
+        title_label.setStyleSheet("font-size: 16px; font-weight: bold;")
+        self.param_form.addRow(title_label)
+        
+        # Add description
+        description = self.current_process.definition.get('description', '')
+        if description:
+            desc_label = QLabel(description)
+            desc_label.setWordWrap(True)
+            desc_label.setStyleSheet("font-style: italic;")
+            self.param_form.addRow(desc_label)
+        
         # Add help button
         help_btn = QPushButton("Show Documentation")
         help_btn.clicked.connect(lambda: self.showDocumentation.emit(self.current_process.su_name))
-        self.param_form.addRow("", help_btn)
+        self.param_form.addRow(help_btn)
         
         # Add separator
         separator = QLabel("Parameters:")
@@ -103,6 +117,8 @@ class ParametersPanel(QGroupBox):
         self.param_form.addRow(separator)
         
         # Add parameters
+        param_descriptions = self.current_process.definition.get('parameter_descriptions', {})
+        
         for param, value in self.current_process.get_parameters().items():
             param_type = self.current_process.parameter_types.get(param, str)
             
@@ -113,25 +129,40 @@ class ParametersPanel(QGroupBox):
             else:
                 label = QLabel(param)
             
+            # Create parameter field container with input and description
+            field_container = QWidget()
+            field_layout = QHBoxLayout(field_container)
+            field_layout.setContentsMargins(0, 0, 0, 0)
+            
             # Create appropriate widget based on type
             if param_type == bool:
-                checkbox = QCheckBox()
-                checkbox.setChecked(value)
-                widget = checkbox
+                widget = QCheckBox()
+                widget.setChecked(value)
             elif param_type == "file":
-                container = QWidget()
-                layout = QHBoxLayout(container)
-                layout.setContentsMargins(0, 0, 0, 0)
+                file_container = QWidget()
+                file_layout = QHBoxLayout(file_container)
+                file_layout.setContentsMargins(0, 0, 0, 0)
                 line_edit = QLineEdit(str(value))
                 browse_btn = QPushButton("Browse")
                 browse_btn.clicked.connect(lambda checked, le=line_edit: self._browse_file(le))
-                layout.addWidget(line_edit)
-                layout.addWidget(browse_btn)
-                widget = container
+                file_layout.addWidget(line_edit)
+                file_layout.addWidget(browse_btn)
+                widget = file_container
             else:
                 widget = QLineEdit(str(value))
+            
+            # Add widget to the field layout
+            field_layout.addWidget(widget)
+            
+            # Add description if available
+            description = param_descriptions.get(param, '')
+            if description:
+                desc_label = QLabel(description)
+                desc_label.setWordWrap(True)
+                desc_label.setStyleSheet("color: #555555; font-size: 10px;")
+                field_layout.addWidget(desc_label, 1)  # Give description more stretch
                 
-            self.param_form.addRow(label, widget)
+            self.param_form.addRow(label, field_container)
         
         # Add note about required parameters
         if hasattr(self.current_process, 'required_params') and self.current_process.required_params:
@@ -172,6 +203,8 @@ class ParametersPanel(QGroupBox):
                     first_widget = layout.itemAt(0).widget()
                     if isinstance(first_widget, QLineEdit):
                         params[label_text] = first_widget.text()
+                    elif isinstance(first_widget, QCheckBox):
+                        params[label_text] = first_widget.isChecked()
         
         return params
     
