@@ -7,13 +7,13 @@
     "vfile": "",
     "nz": "",
     "dt": "",
-    "dx": "1.0",
-    "dz": "1.0",
-    "fmin": "0.025/dt",
-    "fmax": "10*fmin",
-    "amin": "-amax",
-    "amax": "60",
-    "bwh": "0.5*vavg/fmin"
+    "dx": "",
+    "dz": "",
+    "fmin": "",
+    "fmax": "",
+    "amin": "",
+    "amax": "",
+    "bwh": ""
   },
   "parameter_types": {
     "vfile": "file",

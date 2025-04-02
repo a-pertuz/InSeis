@@ -1,0 +1,30 @@
+{
+    "name": "SUNORMALIZE",
+    "display_name": "SUNORMALIZE",
+    "description": "Trace balancing by rms, max, or median",
+    "su_command": "sunormalize",
+    "parameters": {
+      "dt": "",
+      "ns": "",
+      "norm": "",
+      "t0": "",
+      "t1": ""
+    },
+    "parameter_types": {
+      "dt": "float",
+      "ns": "int",
+      "norm": "str",
+      "t0": "float",
+      "t1": "float"
+    },
+    "parameter_descriptions": {
+      "dt": "Sample interval (if not set in header)",
+      "ns": "Number of samples (if not set in header)",
+      "norm": "Type of norm: rms, max, or med",
+      "t0": "Starting time for Window",
+      "t1": "Ending time for Window (default=TMAX)"
+    },
+    "required_params": [],
+    "dependencies": [],
+    "category": "Trace Operations"
+  }

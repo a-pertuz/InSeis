@@ -4,9 +4,9 @@
   "description": "Do a binary operation on two data sets",
   "su_command": "suop2",
   "parameters": {
-    "op": "diff",
-    "w1": "1.0",
-    "w2": "1.0"
+    "op": "",
+    "w1": "",
+    "w2": ""
   },
   "parameter_types": {
     "op": "str",

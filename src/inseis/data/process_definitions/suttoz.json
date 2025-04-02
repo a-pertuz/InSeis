@@ -5,12 +5,12 @@
   "su_command": "suttoz",
   "parameters": {
     "nz": "",
-    "dz": "vmin*dt/2",
-    "fz": "v(ft)*ft/2",
-    "t": "0.0",
-    "v": "1500.0",
+    "dz": "",
+    "fz": "",
+    "t": "",
+    "v": "",
     "vfile": "",
-    "verbose": "1"
+    "verbose": ""
   },
   "parameter_types": {
     "nz": "int",

@@ -1,0 +1,51 @@
+{
+    "name": "SUTAUP",
+    "display_name": "SUTAUP",
+    "description": "Forward and inverse T-X and F-K global slant stacks",
+    "su_command": "sutaup",
+    "parameters": {
+      "option": "",
+      "dt": "",
+      "nx": "",
+      "dx": "",
+      "npoints": "",
+      "pmin": "",
+      "pmax": "",
+      "np": "",
+      "ntau": "",
+      "fmin": "",
+      "verbose": "",
+      "tmpdir": ""
+    },
+    "parameter_types": {
+      "option": "int",
+      "dt": "float",
+      "nx": "int",
+      "dx": "float",
+      "npoints": "int",
+      "pmin": "float",
+      "pmax": "float",
+      "np": "int",
+      "ntau": "int",
+      "fmin": "float",
+      "verbose": "int",
+      "tmpdir": "str"
+    },
+    "parameter_descriptions": {
+      "option": "=1 for forward F-K domain computation, =2 for forward T-X domain computation, =3 for inverse F-K domain computation, =4 for inverse T-X domain computation (default=1)",
+      "dt": "Time sampling interval in seconds (from header if not specified)",
+      "nx": "Number of horizontal samples/traces (counted from data if not specified)",
+      "dx": "Horizontal sampling interval in meters (default=1)",
+      "npoints": "Number of points for rho filter (default=71)",
+      "pmin": "Minimum slope for Tau-P transform in s/m (default=0.0)",
+      "pmax": "Maximum slope for Tau-P transform in s/m (default=1/500)",
+      "np": "Number of slopes for Tau-P transform (default=nx)",
+      "ntau": "Number of time samples in Tau-P domain (default=nt)",
+      "fmin": "Minimum frequency of interest (default=3)",
+      "verbose": "Set to 1 to echo information (default=0)",
+      "tmpdir": "Directory path prefix for storing temporary files"
+    },
+    "required_params": [],
+    "dependencies": [],
+    "category": "Transforms"
+  }

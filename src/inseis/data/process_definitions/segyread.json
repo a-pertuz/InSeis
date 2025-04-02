@@ -10,7 +10,7 @@
     "tape": "file"
   },
   "parameter_descriptions": {
-    "tape": "Input tape device or SEG-Y filename (required)"
+    "tape": "Input SEG-Y filename (required)"
   },
   "required_params": [
     "tape"

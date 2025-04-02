@@ -6,9 +6,9 @@
   "parameters": {
     "taper": "0.1",
     "fmin": "6.0",
-    "fmax": ".6/(2*dt)",
-    "twlen": "entire trace",
-    "ntrw": "10",
+    "fmax": "60",
+    "twlen": "0.3",
+    "ntrw": "40",
     "ntrf": "4",
     "verbose": "0",
     "tmpdir": ""
@@ -27,7 +27,7 @@
     "taper": "Length of taper",
     "fmin": "Minimum frequency to process in Hz (accord to twlen)",
     "fmax": "Maximum frequency to process in Hz",
-    "twlen": "Time window length (minimum 300ms for lower freqs)",
+    "twlen": "Time window length (minimum 0.3s for lower freqs)",
     "ntrw": "Number of traces in window",
     "ntrf": "Number of traces for filter (smaller than ntrw)",
     "verbose": "Set to 1 for diagnostic print",

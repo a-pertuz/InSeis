@@ -8,3 +8,5 @@ from .resources import (
 )
 
 from .console import ConsoleWidget
+from .path_manager import PathManager
+from .result import Result

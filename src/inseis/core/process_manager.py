@@ -6,7 +6,7 @@ import json
 import subprocess
 
 from ..utils.resources import list_resources, copy_resource_to_file, PROCESS_DEF_PACKAGE
-from ..utils.path_utils import PathConverter
+from ..utils.path_manager import PathManager as PathConverter
 from ..config import settings
 
 # Import configuration

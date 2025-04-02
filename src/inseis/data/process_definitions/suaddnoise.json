@@ -1,0 +1,39 @@
+{
+    "name": "SUADDNOISE",
+    "display_name": "SUADDNOISE",
+    "description": "Add noise to traces",
+    "su_command": "suaddnoise",
+    "parameters": {
+      "sn": "",
+      "noise": "",
+      "seed": "",
+      "f": "",
+      "amps": "",
+      "dt": "",
+      "verbose": "",
+      "tmpdir": ""
+    },
+    "parameter_types": {
+      "sn": "float",
+      "noise": "str",
+      "seed": "str",
+      "f": "str",
+      "amps": "str",
+      "dt": "float",
+      "verbose": "int",
+      "tmpdir": "str"
+    },
+    "parameter_descriptions": {
+      "sn": "Signal to noise ratio (default=20)",
+      "noise": "Noise probability distribution (=flat for uniform; default=gauss)",
+      "seed": "Random number seed (integer, default=from_clock)",
+      "f": "Array of filter frequencies (as in sufilter)",
+      "amps": "Array of filter amplitudes",
+      "dt": "Time sampling interval (sec)",
+      "verbose": "=1 for echoing useful information (default=0)",
+      "tmpdir": "Directory path prefix for storing temporary files"
+    },
+    "required_params": [],
+    "dependencies": [],
+    "category": "Trace Operations"
+  }

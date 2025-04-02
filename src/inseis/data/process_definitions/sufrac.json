@@ -5,9 +5,9 @@
   "su_command": "sufrac",
   "parameters": {
     "power": "0",
-    "sign": "-1",
+    "sign": "",
     "dt": "",
-    "phasefac": "0"
+    "phasefac": "0.25"
   },
   "parameter_types": {
     "power": "float",

@@ -14,16 +14,13 @@ from PySide6.QtGui import QGuiApplication, QAction, QClipboard, QColor, QTextCha
 from ..core import process_manager
 from ..core.process_manager import Process
 from ..core import workflow_manager
-from ..ui.dialogs import SaveWorkflowDialog, LoadWorkflowDialog
+from ..ui.dialogs import SaveWorkflowDialog, LoadWorkflowDialog, FirstRunDialog, HelpDialog, AboutDialog
 from ..ui.visualization import VisualizationDialog
-from ..ui.help_dialogs import FirstRunDialog, HelpDialog, AboutDialog
-from ..ui.process_panel import ProcessPanel
-from ..ui.workflow_panel import WorkflowPanel
-from ..ui.parameters_panel import ParametersPanel
+from ..ui.panels import ProcessPanel, WorkflowPanel, ParametersPanel
 from .workflow_controller import WorkflowController
 from ..config import settings
 from ..utils.console import ConsoleWidget
-from ..utils.path_utils import PathConverter
+from ..utils.path_manager import PathManager
 
 class InSeis(QMainWindow):
     """Main application window for InSeis."""
@@ -676,7 +673,7 @@ class InSeis(QMainWindow):
                 base_name = os.path.splitext(file_name)[0]
                 segy_file = os.path.join(folder_path, f"{base_name}.segy")
                 
-                command = f'wsl bash -c "export CWPROOT={self.cwproot} && cd \"{PathConverter.windows_to_wsl(folder_path)}\" && {process_manager.SU_BIN}/segyhdrs < \"{file_name}\" | {process_manager.SU_BIN}/segywrite tape=\"{base_name}.segy\""'
+                command = f'wsl bash -c "export CWPROOT={self.cwproot} && cd \"{PathManager.windows_to_wsl(folder_path)}\" && {process_manager.SU_BIN}/segyhdrs < \"{file_name}\" | {process_manager.SU_BIN}/segywrite tape=\"{base_name}.segy\""'
                 
                 self.console.log_info(f"Converting {file_name} to {base_name}.segy...")
                 result = subprocess.run(command, shell=True, text=True, capture_output=True)

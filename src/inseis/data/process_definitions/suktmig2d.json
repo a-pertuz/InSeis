@@ -6,14 +6,14 @@
   "parameters": {
     "vfile": "",
     "dx": "",
-    "fcdpdata": "tr.cdp",
-    "firstcdp": "fcdpdata",
+    "fcdpdata": "",
+    "firstcdp": "",
     "lastcdp": "",
     "dcdp": "",
     "angmax": "40",
-    "hoffset": ".5*tr.offset",
-    "nfc": "16",
-    "fwidth": "5"
+    "hoffset": "",
+    "nfc": "",
+    "fwidth": ""
   },
   "parameter_types": {
     "vfile": "file",
@@ -34,10 +34,10 @@
     "firstcdp": "First cdp number in velocity file",
     "lastcdp": "Last cdp number in velocity file (from header)",
     "dcdp": "Number of cdps between consecutive traces (from header)",
-    "angmax": "Maximum aperture angle for migration (degrees)",
+    "angmax": "Maximum aperture angle for migration (degrees), default = 40",
     "hoffset": "Half offset",
     "nfc": "Number of Fourier-coefficients to approximate low-pass filters",
-    "fwidth": "High-end frequency increment for the low-pass filters in Hz"
+    "fwidth": "High-end frequency increment for the low-pass filters in Hz, default = 5"
   },
   "required_params": [
     "vfile",

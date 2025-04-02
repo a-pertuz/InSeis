@@ -6,13 +6,13 @@
   "parameters": {
     "dt": "",
     "dx": "",
-    "ffil": "0,0,0.5/dt,0.5/dt",
-    "tmig": "0.0",
-    "vmig": "1500.0",
+    "ffil": "",
+    "tmig": "",
+    "vmig": "",
     "vfile": "",
-    "nxpad": "0",
-    "ltaper": "0",
-    "verbose": "0",
+    "nxpad": "",
+    "ltaper": "",
+    "verbose": "",
     "tmpdir": ""
   },
   "parameter_types": {

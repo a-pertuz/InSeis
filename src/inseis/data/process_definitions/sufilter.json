@@ -1,0 +1,24 @@
+{
+    "name": "SUFILTER",
+    "display_name": "SUFILTER",
+    "description": "Applies a zero-phase, sine-squared tapered filter",
+    "su_command": "sufilter",
+    "parameters": {
+      "dt": "",
+      "f": "",
+      "amps": ""
+    },
+    "parameter_types": {
+      "dt": "float",
+      "f": "str",
+      "amps": "str"
+    },
+    "parameter_descriptions": {
+      "dt": "Time sampling interval (sec)",
+      "f": "Array of filter frequencies (Hz), default=.10*(nyquist),.15*(nyquist),.45*(nyquist),.50*(nyquist)",
+      "amps": "Array of filter amplitudes, default=0.,1.,...,1.,0. (trapezoid-like bandpass filter)"
+    },
+    "required_params": [],
+    "dependencies": [],
+    "category": "Filters"
+  }

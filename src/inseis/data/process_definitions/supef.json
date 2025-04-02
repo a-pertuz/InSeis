@@ -5,13 +5,13 @@
   "su_command": "supef",
   "parameters": {
     "dt": "",
-    "minlag": "dt",
-    "maxlag": "last",
-    "pnoise": "0.001",
-    "mincorr": "tmin",
-    "maxcorr": "tmax",
-    "showwiener": "0",
-    "mix": "1"
+    "minlag": "",
+    "maxlag": "",
+    "pnoise": "",
+    "mincorr": "",
+    "maxcorr": "",
+    "showwiener": "",
+    "mix": ""
   },
   "parameter_types": {
     "dt": "float",
