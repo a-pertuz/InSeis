@@ -47,7 +47,6 @@ QPushButton {
     border-radius: 6px;
     padding: 8px 16px;
     min-height: 16px;
-    min-width: 80px; /* Consistent width for better alignment */
     color: #000000;
     font-weight: bold; /* Making all button text bold */
 }

@@ -10,7 +10,7 @@ from datetime import datetime
 
 from ..config import settings
 from .process_manager import Process
-from ..utils.path_manager import PathManager as PathConverter
+from ..utils.path_utils import PathConverter
 
 # Import paths from settings
 WORKFLOW_DIR = settings.WORKFLOW_DIR

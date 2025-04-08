@@ -51,3 +51,6 @@ coverage.xml
 
 # Project-specific
 config.json
+
+.tmp.driveupload/
+.tmp.drivedownload/
