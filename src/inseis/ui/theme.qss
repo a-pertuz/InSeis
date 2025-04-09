@@ -37,7 +37,6 @@ QGroupBox::title {
     subcontrol-origin: margin;
     subcontrol-position: top center;
     padding: 0 5px;
-    background-color: #ffffff; /* Ensure title has white background */
 }
 
 /* Buttons - Better contrast and accessibility */
@@ -272,13 +271,27 @@ QDialogButtonBox {
 /* RadioButtons - Improved visibility */
 QRadioButton {
     spacing: 8px;
+    padding: 2px;
+    margin: 2px 0;
+    border-radius: 4px;
+}
+
+QRadioButton:hover {
+    background-color: rgba(224, 231, 237, 0.6);
+}
+
+QRadioButton:focus {
+    border: 1px solid #10b981;
+    background-color: rgba(224, 231, 237, 0.3);
+    padding: 1px;
 }
 
 QRadioButton::indicator {
-    width: 18px;
-    height: 18px;
-    border-radius: 9px;
+    width: 16px;
+    height: 16px;
+    border-radius: 8px;
     border: 1px solid #d1d5db;
+    background-color: white;
 }
 
 QRadioButton::indicator:checked {
@@ -289,11 +302,18 @@ QRadioButton::indicator:checked {
 
 QRadioButton::indicator:unchecked:hover {
     border: 1px solid #10b981;
+    background-color: #f8fafc;
 }
 
 QRadioButton:disabled {
     color: #9ca3af;
 }
+
+QRadioButton::indicator:disabled {
+    border: 1px solid #d1d5db;
+    background-color: #f1f5f9;
+}
+
 
 /* Navigation Toolbar styling */
 QToolBar {
@@ -578,14 +598,13 @@ QSlider::handle:horizontal:disabled {
 /* Message Box - Improved visibility */
 QMessageBox {
     background-color: #ffffff;
-}
-
-QMessageBox QLabel {
-    min-width: 240px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 10px;
 }
 
 QMessageBox QPushButton {
-    min-width: 80px;
+    min-width: 40px;
 }
 
 /* List Views */

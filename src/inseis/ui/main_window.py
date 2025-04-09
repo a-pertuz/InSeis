@@ -20,7 +20,7 @@ from ..ui.panels import ProcessPanel, WorkflowPanel, ParametersPanel
 from .workflow_controller import WorkflowController
 from ..config import settings
 from ..utils.console import ConsoleWidget
-from ..utils.path_manager import PathManager
+from ..utils.path_utils import PathManager
 
 class InSeis(QMainWindow):
     """Main application window for InSeis."""

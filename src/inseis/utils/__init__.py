@@ -8,5 +8,5 @@ from .resources import (
 )
 
 from .console import ConsoleWidget
-from .path_manager import PathManager
+from .path_utils import PathManager
 from .result import Result

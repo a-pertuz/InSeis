@@ -10,7 +10,7 @@ from datetime import datetime
 
 from ..config import settings
 from .process_manager import Process
-from ..utils.path_utils import PathConverter
+from ..utils.path_utils import PathManager 
 
 # Import paths from settings
 WORKFLOW_DIR = settings.WORKFLOW_DIR
@@ -18,7 +18,7 @@ JOBS_DIR = settings.JOBS_DIR
 
 def convert_to_wsl_path(windows_path):
     """Convert Windows path to WSL path format."""
-    return PathConverter.windows_to_wsl(windows_path)
+    return PathManager.windows_to_wsl(windows_path)
 
 def validate_workflow(workflow_processes):
     """Validate the entire workflow before execution."""
@@ -177,7 +177,7 @@ def execute_workflow(processes, job_name, console=None):
             results["output_files"].append((display_name, output_file))
             
             # Convert to WSL path
-            wsl_output = PathConverter.windows_to_wsl(output_file)
+            wsl_output = PathManager.windows_to_wsl(output_file)
             
             # Prepare command
             try:

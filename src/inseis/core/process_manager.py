@@ -6,7 +6,7 @@ import json
 import subprocess
 
 from ..utils.resources import list_resources, copy_resource_to_file, PROCESS_DEF_PACKAGE
-from ..utils.path_utils import PathConverter
+from ..utils.path_utils import PathManager 
 from ..config import settings
 
 # Import configuration
@@ -108,14 +108,14 @@ class Process:
         else:
             # Add input redirection if provided
             if infile:
-                wsl_infile = PathConverter.windows_to_wsl(infile)
+                wsl_infile = PathManager.windows_to_wsl(infile)
                 cmd_parts.append(f"< {wsl_infile}")
                 
             cmd_parts.append(self.build_command_parameters())
         
         # Add output redirection if provided
         if outfile:
-            wsl_outfile = PathConverter.windows_to_wsl(outfile)
+            wsl_outfile = PathManager.windows_to_wsl(outfile)
             cmd_parts.append(f"> {wsl_outfile}")
             
         return " ".join(cmd_parts)
@@ -127,7 +127,7 @@ class Process:
         for key, value in self.parameters.items():
             if value:
                 if self.parameter_types.get(key) == "file":
-                    wsl_path = PathConverter.windows_to_wsl(value)
+                    wsl_path = PathManager.windows_to_wsl(value)
                     params.append(f"{key}={wsl_path}")
                 else:
                     params.append(f"{key}={value}")
@@ -151,7 +151,7 @@ class Process:
                     command += f" {param}=1"
             elif self.parameter_types.get(param) == "file":
                 # Convert file paths to WSL format
-                wsl_path = PathConverter.windows_to_wsl(str(value))
+                wsl_path = PathManager.windows_to_wsl(str(value))
                 command += f" {param}={wsl_path}"
             else:
                 command += f" {param}={value}"
