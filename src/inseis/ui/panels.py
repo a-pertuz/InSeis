@@ -158,7 +158,7 @@ class WorkflowPanel(QGroupBox):
         self.down_button = QPushButton("↓")
         
         # Set fixed width to make buttons narrower
-        button_width = 30
+        button_width = 15
         self.up_button.setFixedWidth(button_width)
         self.down_button.setFixedWidth(button_width)
         
