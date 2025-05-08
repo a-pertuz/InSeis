@@ -16,6 +16,15 @@ classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Operating System :: Microsoft :: Windows"
 ]
+keywords = ["seismic", "processing", "segy", "geophysics", "seismic unix"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Topic :: Scientific/Engineering :: Geophysics",
+]
 dependencies = [
     "PySide6>=6.8",
     "appdirs>=1.4.4",
@@ -26,8 +35,9 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/a-pertuz/inseis"
-"Bug Tracker" = "https://github.com/a-pertuz/inseis/issues"
+"Documentation" = "https://a-pertuz.github.io/REVSEIS/index.html"
+"Source Code" = "https://github.com/a-pertuz/InSeis"
+"DOI" = "https://doi.org/10.5281/zenodo.15053545"
 
 [project.scripts]
 inseis = "inseis.__main__:main"
@@ -43,7 +53,6 @@ include-package-data = true
 [tool.setuptools.package-data]
 "inseis" = [
     "data/**/*",
-    "examples/SEGY/*.*", 
     "data/process_definitions/*.*",
     "data/workflow_examples/*.*",
     "ui/theme.qss"

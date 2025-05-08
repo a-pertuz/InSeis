@@ -1,12 +1,16 @@
 # InSeis
 
-InSeis is a graphical user interface design in Python for creating and running Seismic Unix workflows on Windows through the Windows Subsystem for Linux (WSL).
 
 [![DOI](https://zenodo.org/badge/DOI/zenodo.15053545.svg)](https://doi.org/10.5281/zenodo.15053545)
 [![PyPI](https://img.shields.io/pypi/v/segyrecover)](https://pypi.org/project/inseis/)
 [![Last Commit](https://img.shields.io/github/last-commit/a-pertuz/inseis)](https://github.com/a-pertuz/inseis/commits/main)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
 [![Python Version](https://img.shields.io/badge/Python-3.12+-yellow)](https://www.python.org/downloads/)
+
+InSeis is a graphical user interface design in Python for creating and running Seismic Unix workflows on Windows through the Windows Subsystem for Linux (WSL).
+
+
+InSeis is part of the [REVSEIS](https://a-pertuz.github.io/REVSEIS/index.html) suite. A collection of open source tools to digitize and enhance vintage seismic sections. See [REVSEIS](https://a-pertuz.github.io/REVSEIS/index.html) for more information.
 
 ## Features
 
