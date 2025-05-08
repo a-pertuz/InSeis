@@ -4,4 +4,4 @@ InSeis: Seismic Unix Workflow Manager
 A GUI application for creating and running Seismic Unix workflows.
 """
 
-__version__ = "1.2.1"
+__version__ = "1.3.0"

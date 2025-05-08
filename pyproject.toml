@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "inseis"
-version = "1.2.1"
+version = "1.3.0"
 authors = [
     {name = "Alejandro Pertuz", email = "apertuz@ucm.es"},
 ]
@@ -45,5 +45,6 @@ include-package-data = true
     "data/**/*",
     "examples/SEGY/*.*", 
     "data/process_definitions/*.*",
-    "data/workflow_examples/*.*"
+    "data/workflow_examples/*.*",
+    "ui/theme.qss"
 ]

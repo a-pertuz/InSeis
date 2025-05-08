@@ -291,7 +291,7 @@ class AboutDialog(QDialog):
         title.setFont(QFont("Arial", 16, QFont.Bold))
         
         # Version and copyright info
-        __version__ = "1.2.1"
+        __version__ = "1.3.0"
         version = QLabel(f"Version {__version__}")
         version.setAlignment(Qt.AlignCenter)
         
