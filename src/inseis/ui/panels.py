@@ -154,15 +154,12 @@ class WorkflowPanel(QGroupBox):
         arrows_layout = QVBoxLayout()
         
         # Create stylish arrow buttons with fixed width
-        self.up_button = QPushButton("↑")
-        self.down_button = QPushButton("↓")
-        
-        # Set fixed width to make buttons narrower
-        button_width = 15
-        self.up_button.setFixedWidth(button_width)
-        self.down_button.setFixedWidth(button_width)
-        
-        
+        self.up_button = QPushButton("🞁")
+        self.down_button = QPushButton("🞃")
+        self.up_button.setObjectName("upButton")
+        self.down_button.setObjectName("downButton")
+
+
         # Add buttons to layout with spacing
         arrows_layout.addSpacing(6)
         arrows_layout.addWidget(self.up_button)
@@ -384,24 +381,27 @@ class ParametersPanel(QGroupBox):
             field_layout.setContentsMargins(0, 0, 0, 0)
             
             # Create appropriate widget based on type
-            if param_type == bool:
-                widget = QCheckBox()
-                widget.setChecked(value)
-            elif param_type == "file":
-                file_container = QWidget()
-                file_layout = QHBoxLayout(file_container)
-                file_layout.setContentsMargins(0, 0, 0, 0)
+            if param_type == "file":
+                # Create line edit for file path
                 line_edit = QLineEdit(str(value))
+                
+                # Store parameter name as a property of the line edit for easier retrieval
+                line_edit.setProperty("param_name", param)
+                line_edit.setProperty("param_type", "file")
+                
+                # Create browse button
                 browse_btn = QPushButton("Browse")
                 browse_btn.clicked.connect(lambda checked, le=line_edit: self._browse_file(le))
-                file_layout.addWidget(line_edit)
-                file_layout.addWidget(browse_btn)
-                widget = file_container
+                
+                # Add to layout
+                field_layout.addWidget(line_edit)
+                field_layout.addWidget(browse_btn)
+                widget = field_container
             else:
                 widget = QLineEdit(str(value))
-            
-            # Add widget to the field layout
-            field_layout.addWidget(widget)
+                # Store parameter name as a property
+                widget.setProperty("param_name", param)
+                field_layout.addWidget(widget)
             
             # Add description if available
             description = param_descriptions.get(param, '')
@@ -423,6 +423,7 @@ class ParametersPanel(QGroupBox):
         """Extract parameter values from form."""
         params = {}
         
+        # Collect all form fields
         for i in range(0, self.param_form.rowCount()):
             label_item = self.param_form.itemAt(i, QFormLayout.LabelRole)
             field_item = self.param_form.itemAt(i, QFormLayout.FieldRole)
@@ -438,22 +439,24 @@ class ParametersPanel(QGroupBox):
             label_text = label_widget.text().split(' *')[0]
             if not label_text:
                 continue
-                
-            # Get widget value
+            
+            # Get field widget
             field_widget = field_item.widget()
-            if isinstance(field_widget, QCheckBox):
-                params[label_text] = field_widget.isChecked()
-            elif isinstance(field_widget, QLineEdit):
+            
+            # Handle different widget types
+            if isinstance(field_widget, QLineEdit):
                 params[label_text] = field_widget.text()
             elif hasattr(field_widget, 'layout'):
-                # Handle container widgets
+                # Find QLineEdit widgets in the container
                 layout = field_widget.layout()
-                if layout and layout.count() > 0:
-                    first_widget = layout.itemAt(0).widget()
-                    if isinstance(first_widget, QLineEdit):
-                        params[label_text] = first_widget.text()
-                    elif isinstance(first_widget, QCheckBox):
-                        params[label_text] = first_widget.isChecked()
+                if layout:
+                    for j in range(layout.count()):
+                        widget = layout.itemAt(j).widget()
+                        if isinstance(widget, QLineEdit):
+                            # This is our file input
+                            file_path = widget.text().strip()
+                            params[label_text] = file_path
+                            break
         
         return params
     

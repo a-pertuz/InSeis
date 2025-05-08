@@ -88,14 +88,29 @@ class Process:
         
         # Check for required parameters
         for param_name in self.required_params:
-            if not self.parameters.get(param_name):
+            param_value = self.parameters.get(param_name)
+            param_type = self.parameter_types.get(param_name)
+            
+            # Different validation based on parameter type
+            if param_type == "file":
+                # For file parameters, check if the value is empty or the file doesn't exist
+                if param_value is None:
+                    errors.append(f"Missing required parameter: {param_name}")
+                elif param_value.strip() == "":
+                    errors.append(f"Missing required parameter: {param_name}")
+                elif not os.path.exists(param_value):
+                    errors.append(f"File not found: {param_value}")
+            elif not param_value and param_value != 0:  # Allow numerical zero values
                 errors.append(f"Missing required parameter: {param_name}")
         
         return errors
-    
+        
     def set_parameters(self, params):
         """Set parameters with validation."""
+        # Update parameters
         self.parameters.update(params)
+        
+        # Validate and return any errors
         return self.validate_parameters()
     
     def get_su_command(self, infile=None, outfile=None):
@@ -215,7 +230,7 @@ class Process:
     def load_presets(self):
         """Load available presets for this process."""
         preset_path = self.get_preset_file_path()
-        if os.path.exists(preset_path):
+        if (preset_path):
             try:
                 with open(preset_path, 'r') as f:
                     return json.load(f)

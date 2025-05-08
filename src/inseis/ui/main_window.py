@@ -2,7 +2,6 @@
 
 import os
 import subprocess
-import datetime
 from PySide6.QtWidgets import (QMainWindow, QWidget, QApplication, QHBoxLayout, QVBoxLayout, QListWidget,
                              QFormLayout, QLineEdit, QPushButton, QLabel, QMessageBox,
                              QGroupBox, QTextEdit, QInputDialog, QCheckBox, QScrollArea,
@@ -115,8 +114,7 @@ class InSeis(QMainWindow):
         # Add the horizontal splitter to the panels layout
         panels_layout.addWidget(self.horizontal_splitter)
         
-        # Set initial sizes for the horizontal splitter (make workflow panel 30% smaller)
-        # Distribution: Process Panel 35%, Workflow Panel 25%, Parameters Panel 40%
+       
         total_width = 1000  # Arbitrary reference width
         self.horizontal_splitter.setSizes([int(total_width * 0.25), int(total_width * 0.2), int(total_width * 0.55)])
         
@@ -203,6 +201,7 @@ class InSeis(QMainWindow):
         """Add a process to the workflow."""
         # Create a new process instance
         new_process = Process(process.definition)
+       
         
         # Set parameters
         validation_errors = new_process.set_parameters(parameters)

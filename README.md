@@ -2,6 +2,12 @@
 
 InSeis is a graphical interface for creating and running Seismic Unix workflows on Windows through the Windows Subsystem for Linux (WSL).
 
+[![DOI](https://zenodo.org/badge/DOI/zenodo.15053545.svg)](https://doi.org/10.5281/zenodo.15053545)
+[![PyPI](https://img.shields.io/pypi/v/segyrecover)](https://pypi.org/project/inseis/)
+[![Last Commit](https://img.shields.io/github/last-commit/a-pertuz/inseis)](https://github.com/a-pertuz/inseis/commits/main)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-green.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
+[![Python Version](https://img.shields.io/badge/Python-3.12+-yellow)](https://www.python.org/downloads/)
+
 ## Features
 
 - **User-Friendly Interface**: Easily create, edit, and run Seismic Unix workflows
@@ -10,12 +16,22 @@ InSeis is a graphical interface for creating and running Seismic Unix workflows 
 - **Process Library**: Extensive library of pre-configured Seismic Unix processes
 - **Windows Integration**: Use Seismic Unix on Windows through WSL
 
+## Citation
+
+If you use this software in your research, please cite it as:
+
+```
+Pertuz, A. (2025). InSeis: Simplifying Seismic Unix workflows on Windows using WSL and Python. Zenodo. https://doi.org/10.5281/zenodo.15053545
+```
+
+Find this software in the Zenodo Archive: [https://doi.org/10.5281/zenodo.15053545](https://doi.org/10.5281/zenodo.15053545)
+
+
 ## Requirements
 
 - Windows 10/11 with WSL installed
 - Seismic Unix installed in WSL
-- Python 3.8 or higher
-- PySide6 (Qt for Python)
+- Python 3.12 or higher
 
 ## Installation
 
@@ -31,6 +47,7 @@ wsl --install
 ### 2. Install Seismic Unix
 
 - Run the [Seismic Unix Installation script](https://gist.github.com/a-pertuz/2b341bc8af2a37cde820d829f2789d99). Originally developed by the BotoSeis team. Tested for Ubuntu 22.04 LTS
+
 - Open WSL, type the following command and press Enter:
 
 ```bash
@@ -43,15 +60,14 @@ This script automates the installation and configuration of Seismic Unix release
  - Open Command Prompt (cmd) and type one of the following options:
 
 ```bash
-pip install InSeis
+pip install inseis
 ```
 
 ```bash
-pip install git+https://github.com/a-pertuz/InSeis.git
+pip install git+https://github.com/a-pertuz/inseis.git
 ```
 
-
-## Quick Start Guide
+## How to Use
 
 1. **Launch InSeis**: Open the application from your Start menu or run `inseis` in Command Prompt
 2. **Create a new workflow**: The main interface displays available processes on the left and your current workflow on the right
@@ -62,8 +78,7 @@ pip install git+https://github.com/a-pertuz/InSeis.git
 
 > **Important note**: Seismic Unix uses **SU** files as its native format. If you need **SEGY** files for external applications, use the **"Convert SU to SEGY"** utility in the menu bar after processing.
 
-
-## Saving and Loading Workflows
+### Saving and Loading Workflows
 
 To save your workflow:
 1. Click "Workflows" > "Save Workflow..."
@@ -73,41 +88,27 @@ To load a workflow:
 1. Click "Workflows" > "Load Workflow..."
 2. Select from your saved workflows
 
-## Customizing Process Definitions
+### Troubleshooting
 
-InSeis uses JSON files to define available processes in Seismic Unix. You can modify existing definitions or create new ones:
-
-1. Open the "Process Definitions" menu
-2. Select "Open Definitions Directory"
-3. Edit existing JSON files or create new ones following the same format
-
-## Troubleshooting
-
-### WSL Connection Issues
-
+**WSL Connection Issues**
 - Ensure WSL is installed and running
 - Try restarting the WSL service: `wsl --shutdown` and then restart
 
-### Seismic Unix Not Found
-
+**Seismic Unix Not Found**
 - Check your CWPROOT path in the Configuration menu
 - Verify Seismic Unix is properly installed in WSL
 
-### Input/Output File Issues
-
+**Input/Output File Issues**
 - Check file permissions
 - Ensure paths don't contain special characters
 - Use forward slashes in file paths
 
 ## License
 
-### GNU GPL v3 License Summary  
-
-This project is licensed under the **GNU General Public License v3 (GPLv3)**. This means:  
+InSeis is licensed under the **GNU General Public License v3 (GPLv3)**. This means:  
 
 - You are free to **use, modify, and distribute** the software.  
 - Any modified or distributed versions **must remain open-source** under the same GPLv3 license.  
-- It includes protections against **patent claims** and **Digital Rights Management (DRM) restrictions**.  
 - There is **no warranty**, and the software is provided **"as-is"**.  
 
 For full details, see the [GPLv3 License](https://www.gnu.org/licenses/gpl-3.0.html).
