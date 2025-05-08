@@ -1,6 +1,6 @@
-# InSeis: Seismic Unix Workflow Manager
+# InSeis
 
-InSeis is a graphical interface for creating and running Seismic Unix workflows on Windows through the Windows Subsystem for Linux (WSL).
+InSeis is a graphical user interface design in Python for creating and running Seismic Unix workflows on Windows through the Windows Subsystem for Linux (WSL).
 
 [![DOI](https://zenodo.org/badge/DOI/zenodo.15053545.svg)](https://doi.org/10.5281/zenodo.15053545)
 [![PyPI](https://img.shields.io/pypi/v/segyrecover)](https://pypi.org/project/inseis/)
