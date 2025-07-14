@@ -300,7 +300,7 @@ class AboutDialog(QDialog):
         
         # Description text
         description = QLabel(
-            "A GUI tool for using Seismic Unix through Windows Subsystem for Linux (WSL).")
+            "A GUI based tool for using Seismic Unix workflows through Windows Subsystem for Linux (WSL).")
         description.setAlignment(Qt.AlignCenter)
         description.setWordWrap(True)
         
@@ -327,7 +327,7 @@ class HelpDialog(QDialog):
     
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("How to Use subrdigepy")    
+        self.setWindowTitle("How to Use InSeis")    
         screen = QApplication.primaryScreen().geometry()
         screen_width = min(screen.width(), 1920)
         screen_height = min(screen.height(), 1080)

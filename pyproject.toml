@@ -8,23 +8,18 @@ version = "1.0.0"
 authors = [
     {name = "Alejandro Pertuz", email = "apertuz@ucm.es"},
 ]
-description = "A GUI application for creating and running Seismic Unix workflows"
+description = "A GUI-based application for creating and running Seismic Unix workflows on Windows using the Linux subsystem"
 readme = "README.md"
 requires-python = ">=3.9"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Operating System :: Microsoft :: Windows"
-]
-keywords = ["seismic", "processing", "segy", "geophysics", "seismic unix"]
-classifiers = [
+    "Operating System :: Microsoft :: Windows",
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.10",
-    "Topic :: Scientific/Engineering :: Geophysics",
+    "Programming Language :: Python :: 3.10"
 ]
+keywords = ["seismic", "processing", "segy", "geophysics", "seismic unix"]
 dependencies = [
     "PySide6>=6.8",
     "appdirs>=1.4.4",
