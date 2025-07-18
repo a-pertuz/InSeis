@@ -83,7 +83,7 @@ pip install inseis
 
 </details>
 
-<details open>
+<details>
 <summary><h2>🚀 Quick Start</h2></summary>
 
 1. **Launch InSeis**: Open the application from your Start menu or run `inseis` in Command Prompt
@@ -97,7 +97,7 @@ pip install inseis
 
 </details>
 
-<details open>
+<details>
 <summary><h2>📚 Complete Tutorial</h2></summary>
 
 ### Interface Overview
