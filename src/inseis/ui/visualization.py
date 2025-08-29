@@ -162,6 +162,12 @@ class SeismicDisplayTab(QWidget):
         """Change the horizontal axis for plotting."""
         self.current_haxis = haxis
         self._update_plot()
+    
+    def cleanup(self):
+        """Clean up matplotlib figure to free memory."""
+        if hasattr(self, 'fig') and self.fig is not None:
+            plt.close(self.fig)
+            self.fig = None
 
 class VisualizationDialog(QDialog):
     """Dialog for visualizing seismic data from processing steps."""
@@ -191,3 +197,14 @@ class VisualizationDialog(QDialog):
         for name, path in self.su_files:
             tab = SeismicDisplayTab(name, path)
             self.tab_widget.addTab(tab, name)
+    
+    def closeEvent(self, event):
+        """Override close event to clean up matplotlib figures."""
+        # Clean up all tabs
+        for i in range(self.tab_widget.count()):
+            tab = self.tab_widget.widget(i)
+            if hasattr(tab, 'cleanup'):
+                tab.cleanup()
+        
+        # Accept the close event
+        event.accept()
